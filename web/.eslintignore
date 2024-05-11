@@ -1,0 +1,14 @@
+# config
+.eslintrc.cjs
+.prettierrc
+next.config.cjs
+tailwind.config.cjs
+tsconfig.json
+postcss.config.cjs
+
+# build
+build/
+bin/
+obj/
+out/
+.next/
