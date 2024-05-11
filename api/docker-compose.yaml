@@ -1,0 +1,18 @@
+version: "3"
+services:
+  api:
+    platform: linux/x86_64
+    build:
+      #同じ階層のDockerfileを指定
+      context: .
+    volumes:
+      #ホストとコンテナを同期
+      - .:/usr/src/app
+      # #コンテナ外部のボリュームとコンテナを同期
+      # - node_modules:/app/node_modules
+    ports:
+      #ホストとコンテナのポート3000を同期
+      - 8050:8000
+# volumes:
+#   #名前付きボリュームをコンテナの外部に作成
+#   node_modules:

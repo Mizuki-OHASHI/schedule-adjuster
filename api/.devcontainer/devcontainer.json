@@ -1,0 +1,25 @@
+// コンテナ上のVSCodeの設定
+{
+  // VSCode上で表示される名前
+  "name": "Python Fast Api with Mip",
+  // docker-composeファイルのパス
+  "dockerComposeFile": "../docker-compose.yaml",
+  // docker-composeのサービス
+  "service": "api",
+  // VSCodeのルートディレクトリ
+  "workspaceFolder": "/usr/src/app",
+  // コンテナからホストに転送するポートリスト
+  "forwardPorts": [8050],
+  // VSCodeの設定等
+  "customizations": {
+    "vscode": {
+      // 拡張機能リスト(拡張機能IDを指定)
+      "extensions": [
+        "MS-CEINTL.vscode-language-pack-ja",
+        "ms-python.python",
+        "ms-python.debugpy",
+        "ms-python.black-formatter"
+      ]
+    }
+  }
+}
