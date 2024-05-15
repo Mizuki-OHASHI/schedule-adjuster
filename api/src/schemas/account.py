@@ -1,18 +1,20 @@
 from enum import Enum
-from typing import List, Optional
-from datetime import date, datetime
+from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict
 
+from src.schemas.group import GroupGet
 
-class UserBase(BaseModel):
-    role: "UserRole"
+
+class AccountBase(BaseModel):
+    user_id: str
+    group_id: str
+    role: "AccountRole"
     name: str
-    emial: str
-    birthday: Optional[date] = None
 
 
-class UserRole(Enum):
+class AccountRole(Enum):
+    GUEST = "GUEST"
     USER = "USER"
     ADMIN = "ADMIN"
 
@@ -20,12 +22,9 @@ class UserRole(Enum):
         return self.value
 
 
-class UserGet(UserBase):
+class AccountGet(AccountBase):
     id: str
     created_at: datetime
+    group: GroupGet
 
     model_config = ConfigDict(from_attributes=True)
-
-
-class UserCreate(UserBase):
-    pass
