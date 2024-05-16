@@ -1,5 +1,5 @@
-from enum import Enum
 from datetime import datetime
+from enum import Enum
 
 from pydantic import BaseModel, ConfigDict
 
@@ -28,3 +28,7 @@ class AccountGet(AccountBase):
     group: GroupGet
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class AccountCreate(AccountBase):
+    pass

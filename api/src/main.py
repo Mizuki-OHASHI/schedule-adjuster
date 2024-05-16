@@ -2,7 +2,6 @@ from fastapi import FastAPI
 
 from src.routers.router import router_list
 
-
 app = FastAPI()
 
 

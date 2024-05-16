@@ -1,11 +1,10 @@
 from datetime import datetime
 from enum import Enum
-from typing import Optional, List
+from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
 
 from src.schemas.user import UserGet
-
 
 ### Participant ###
 

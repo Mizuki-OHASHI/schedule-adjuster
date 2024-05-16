@@ -1,15 +1,16 @@
 from datetime import datetime
 from enum import Enum
-from typing import Optional, List
+from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
-
 
 ### Schedule Master ###
 
 
 class ScheduleMasterBase(BaseModel):
     group_id: str
+    name: str
+    description: Optional[str] = None
     status: "ScheduleMasterStatus"
 
 
@@ -40,7 +41,7 @@ class ScheduleMasterCreate(ScheduleMasterBase):
 
 class ScheduleBase(BaseModel):
     schedule_master_id: str
-    title: str
+    name: str
     description: Optional[str] = None
     startAt: datetime
     endAt: Optional[datetime] = None

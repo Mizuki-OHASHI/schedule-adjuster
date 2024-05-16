@@ -1,6 +1,6 @@
+from datetime import date, datetime
 from enum import Enum
 from typing import List, Optional
-from datetime import date, datetime
 
 from pydantic import BaseModel, ConfigDict
 
@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict
 class UserBase(BaseModel):
     role: "UserRole"
     name: str
-    emial: str
+    email: str
     birthday: Optional[date] = None
 
 
