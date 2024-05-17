@@ -1,6 +1,6 @@
+from datetime import datetime
 from random import randint
 from typing import List
-from datetime import datetime
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -9,8 +9,9 @@ from src.crud import schedule
 from src.database.database import session_factory
 from src.models import Schedule, ScheduleMaster
 from src.schemas.schedule import ScheduleCreate, ScheduleGet
+from src.services.id import new_id
 
-router = APIRouter()
+router = APIRouter(tags=["schedule"])
 
 
 @router.get("/schedules")
@@ -29,7 +30,7 @@ def get_schedule(
 def add_schedule(
     scheduleCreate: ScheduleCreate, session: Session = Depends(session_factory)
 ) -> ScheduleGet:
-    id = str(randint(1000, 9999))
+    id = new_id()
     schedule_master = session.get(ScheduleMaster, scheduleCreate.schedule_master_id)
     if not schedule_master:
         raise ValueError("Invalid schedule_master_id")
@@ -57,7 +58,7 @@ def add_schedules(
             raise ValueError("Invalid schedule_master_id")
         scheduleDtos.append(
             Schedule(
-                id=str(randint(1000, 9999)),
+                id=new_id(),
                 schedule_master_id=sched.schedule_master_id,
                 name=sched.name,
                 description=sched.description,

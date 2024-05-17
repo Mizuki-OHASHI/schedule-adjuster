@@ -57,5 +57,5 @@ class ParticipantProfileGet(ParticipantProfileBase):
     model_config = ConfigDict(from_attributes=True)
 
 
-class PartcipantProfileCreate(ParticipantProfileBase):
+class ParticipantProfileCreate(ParticipantProfileBase):
     pass

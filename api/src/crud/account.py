@@ -1,5 +1,7 @@
 from typing import List
+
 from sqlalchemy.orm import Session
+from sqlalchemy import and_
 
 from src.models import Account
 
@@ -11,16 +13,11 @@ def get_account(session: Session, account_id: str) -> Account:
     return account
 
 
-def get_many_accounts_by_group(
-    session: Session, group_id: str, skip: int = 0, limit: int = 100
+def get_many_accounts(
+    session: Session, skip: int = 0, limit: int = 100, **kwargs
 ) -> List[Account]:
-    return (
-        session.query(Account)
-        .filter(Account.group_id == group_id)
-        .offset(skip)
-        .limit(limit)
-        .all()
-    )
+    filters = [getattr(Account, key) == value for key, value in kwargs.items()]
+    return session.query(Account).filter(and_(*filters)).offset(skip).limit(limit).all()
 
 
 def add_account(session: Session, account: Account) -> Account:

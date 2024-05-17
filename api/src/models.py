@@ -1,14 +1,10 @@
 from datetime import date, datetime
 from typing import List, Optional
 
-from sqlalchemy import JSON, Boolean, Date, DateTime, Enum, ForeignKey, String, Integer
-from sqlalchemy.orm import (
-    DeclarativeBase,
-    Mapped,
-    MappedAsDataclass,
-    mapped_column,
-    relationship,
-)
+from sqlalchemy import (JSON, Boolean, Date, DateTime, Enum, ForeignKey,
+                        Integer, String)
+from sqlalchemy.orm import (DeclarativeBase, Mapped, MappedAsDataclass,
+                            mapped_column, relationship)
 from sqlalchemy.schema import UniqueConstraint
 
 from src.schemas.participant import ParticipantAvailability

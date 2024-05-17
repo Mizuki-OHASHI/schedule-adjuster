@@ -1,4 +1,5 @@
 from typing import List
+
 from sqlalchemy.orm import Session
 
 from src.models import User
@@ -11,8 +12,11 @@ def get_user(session: Session, user_id: str) -> User:
     return user
 
 
-def get_many_users(session: Session, skip: int = 0, limit: int = 100) -> List[User]:
-    return session.query(User).offset(skip).limit(limit).all()
+def get_many_users(
+    session: Session, skip: int = 0, limit: int = 100, **kwargs
+) -> List[User]:
+    filters = [getattr(User, key) == value for key, value in kwargs.items()]
+    return session.query(User).filter(*filters).offset(skip).limit(limit).all()
 
 
 def add_user(session: Session, user: User) -> User:

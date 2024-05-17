@@ -6,8 +6,9 @@ from sqlalchemy.orm import Session
 
 from src.crud import account
 from src.database.database import session_factory
-from src.models import Account, User, Group
+from src.models import Account, Group, User
 from src.schemas.account import AccountCreate, AccountGet
+from src.services.id import new_id
 
 router = APIRouter(tags=["account"])
 
@@ -23,7 +24,7 @@ def get_account(
 def add_account(
     accountCreate: AccountCreate, session: Session = Depends(session_factory)
 ) -> AccountGet:
-    id = str(randint(1000, 9999))
+    id = new_id()
     user = session.get(User, accountCreate.user_id)
     group = session.get(Group, accountCreate.group_id)
     if not user or not group:
@@ -50,7 +51,7 @@ def add_accounts(
             raise ValueError("Invalid user_id or group_id")
         accountDtos.append(
             Account(
-                id=str(randint(1000, 9999)),
+                id=new_id(),
                 user_id=acc.user_id,
                 group_id=acc.group_id,
                 role=acc.role.value,

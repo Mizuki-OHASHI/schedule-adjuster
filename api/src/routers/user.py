@@ -38,24 +38,6 @@ def add_user(
     return UserGet.model_validate(user.add_user(session, userDto))
 
 
-@router.post("/users", response_model=List[UserCreate])
-def add_users(
-    users: List[UserCreate], session: Session = Depends(session_factory)
-) -> List[UserGet]:
-    userDtos = [
-        User(
-            id=str(randint(1000, 9999)),
-            name=user.name,
-            role=user.role.value,
-            email=user.email,
-            birthday=user.birthday,
-            accounts=[],
-        )
-        for user in users
-    ]
-    return list(map(UserGet.model_validate, user.add_many_users(session, userDtos)))
-
-
 @router.put("/user/{user_id}", response_model=UserCreate)
 def update_user(
     user_id: str, userCreate: UserCreate, session: Session = Depends(session_factory)
@@ -69,21 +51,3 @@ def update_user(
         accounts=[],
     )
     return UserGet.model_validate(user.upsert_user(session, userDto))
-
-
-@router.put("/users", response_model=List[UserCreate])
-def update_users(
-    users: List[UserCreate], session: Session = Depends(session_factory)
-) -> List[UserGet]:
-    userDtos = [
-        User(
-            id=user.id,
-            name=user.name,
-            role=user.role.value,
-            email=user.email,
-            birthday=user.birthday,
-            accounts=[],
-        )
-        for user in users
-    ]
-    return list(map(UserGet.model_validate, user.update_many_users(session, userDtos)))

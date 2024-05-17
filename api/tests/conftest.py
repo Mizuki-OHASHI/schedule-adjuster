@@ -8,7 +8,7 @@ from src.database.database import session_factory
 from src.models import Base
 
 # テスト用SQLiteデータベースの設定
-SQLALCHEMY_DATABASE_URL = "sqlite:///sqlite.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///test.db"
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
