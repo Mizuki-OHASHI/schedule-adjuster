@@ -3,3 +3,4 @@ uvicorn==0.29.0
 mip==1.15.0
 SQLAlchemy==2.0.30
 python-ulid[pydantic]==2.5.0
+firebase-admin==6.5.0

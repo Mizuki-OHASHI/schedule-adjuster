@@ -3,3 +3,4 @@
 **/.pytest_cache/
 .venv/
 **.db
+**account_key.*json

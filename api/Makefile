@@ -1,3 +1,5 @@
+act:
+	echo 'source .venv/bin/activate' | pbcopy
 schema\:save:
 	python src/save_openapi.py
 pip\:apply:
