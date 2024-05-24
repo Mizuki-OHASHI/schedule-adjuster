@@ -1,7 +1,9 @@
-from src.routers import group, me, user
+from src.routers import account, group, participant, schedule, user
 
 router_list = [
-    me.router,
     user.router,
     group.router,
+    account.router,
+    schedule.router,
+    participant.router,
 ]

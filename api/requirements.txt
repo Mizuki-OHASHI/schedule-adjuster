@@ -2,5 +2,5 @@ fastapi==0.111.0
 uvicorn==0.29.0
 mip==1.15.0
 SQLAlchemy==2.0.30
-aiosqlite==0.20.0
-alembic==1.13.1
+python-ulid[pydantic]==2.5.0
+firebase-admin==6.5.0

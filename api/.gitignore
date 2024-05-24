@@ -1,4 +1,6 @@
 .env
 **/__pycache__/
+**/.pytest_cache/
 .venv/
-sqlite.db
+**.db
+**account_key.*json

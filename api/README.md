@@ -32,7 +32,7 @@ M1 以降の Mac では mip のインストールでは x86_64 用の Cbc がイ
 
 もしくは、Docker を使ってください
 
-## 開発
+## 開発ツール
 
 ### フォーマッター
 
@@ -57,6 +57,32 @@ alembic revision --autogenerate
 ```shell
 alembic upgrade head
 ```
+
+### 依存関係解析
+
+インストール
+
+```shell
+brew install graphviz
+pip install pydeps
+```
+
+使い方
+
+```shell
+pydeps [--options] [pythonファイル名|モジュールディレクトリ名]
+```
+
+例
+
+```shell
+### パッケージ全体の依存関係を png で出力
+pydeps -T png src
+### パッケージ全体の循環参照を含む依存関係を png で出力
+pydeps -T png --show-cycles src
+```
+
+confer: https://tech.mntsq.co.jp/entry/2021/03/19/120325
 
 ### Docker
 

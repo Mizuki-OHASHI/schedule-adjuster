@@ -1,11 +1,9 @@
-import sys
 import os
+import sys
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
 from alembic import context
+from sqlalchemy import engine_from_config, pool
 
 current_file_path = os.path.abspath(__file__)
 getparent = lambda path, level: (
@@ -14,9 +12,8 @@ getparent = lambda path, level: (
 root_dir = getparent(current_file_path, 3)
 sys.path.append(root_dir)
 
+from src import models  # noqa: F401
 from src.models import Base
-from src.models import User, Group, UserGroup  # noqa: F401
-
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

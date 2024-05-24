@@ -1,0 +1,1898 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Schedule Adjuster API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Index",
+        "operationId": "index__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/{status}": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health__status__get",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "summary": "Getme",
+        "operationId": "getMe_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserGet"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get Users",
+        "operationId": "get_users_users_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/UserGet"
+                  },
+                  "type": "array",
+                  "title": "Response Get Users Users Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{user_id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get User",
+        "operationId": "get_user_user__user_id__get",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserGet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update User",
+        "operationId": "update_user_user__user_id__put",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "User Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Add User",
+        "operationId": "add_user_user_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/groups": {
+      "get": {
+        "tags": [
+          "group"
+        ],
+        "summary": "Get Groups",
+        "operationId": "get_groups_groups_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/GroupGet"
+                  },
+                  "type": "array",
+                  "title": "Response Get Groups Groups Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/group/{group_id}": {
+      "get": {
+        "tags": [
+          "group"
+        ],
+        "summary": "Get Group",
+        "operationId": "get_group_group__group_id__get",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupGet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "group"
+        ],
+        "summary": "Update Group",
+        "operationId": "update_group_group__group_id__put",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupCreate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/group": {
+      "post": {
+        "tags": [
+          "group"
+        ],
+        "summary": "Add Group",
+        "operationId": "add_group_group_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupCreate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/group/accounts/{group_id}": {
+      "get": {
+        "tags": [
+          "group"
+        ],
+        "summary": "Get Accounts By Group",
+        "operationId": "get_accounts_by_group_group_accounts__group_id__get",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccountGet"
+                  },
+                  "title": "Response Get Accounts By Group Group Accounts  Group Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account/{account_id}": {
+      "get": {
+        "tags": [
+          "account"
+        ],
+        "summary": "Get Account",
+        "operationId": "get_account_account__account_id__get",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Account Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountGet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "account"
+        ],
+        "summary": "Update Account",
+        "operationId": "update_account_account__account_id__put",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Account Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountCreate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account": {
+      "post": {
+        "tags": [
+          "account"
+        ],
+        "summary": "Add Account",
+        "operationId": "add_account_account_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountCreate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "put": {
+        "tags": [
+          "account"
+        ],
+        "summary": "Update Accounts",
+        "operationId": "update_accounts_accounts_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/AccountCreate"
+                },
+                "type": "array",
+                "title": "Accounts"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AccountCreate"
+                  },
+                  "type": "array",
+                  "title": "Response Update Accounts Accounts Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "account"
+        ],
+        "summary": "Add Accounts",
+        "operationId": "add_accounts_accounts_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/AccountCreate"
+                },
+                "type": "array",
+                "title": "Accounts"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AccountCreate"
+                  },
+                  "type": "array",
+                  "title": "Response Add Accounts Accounts Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schedules": {
+      "get": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Get Schedules",
+        "operationId": "get_schedules_schedules_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleGet"
+                  },
+                  "type": "array",
+                  "title": "Response Get Schedules Schedules Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Update Schedules",
+        "operationId": "update_schedules_schedules_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/ScheduleCreate"
+                },
+                "type": "array",
+                "title": "Schedules"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleCreate"
+                  },
+                  "type": "array",
+                  "title": "Response Update Schedules Schedules Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Add Schedules",
+        "operationId": "add_schedules_schedules_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/ScheduleCreate"
+                },
+                "type": "array",
+                "title": "Schedules"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleCreate"
+                  },
+                  "type": "array",
+                  "title": "Response Add Schedules Schedules Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schedule/{schedule_id}": {
+      "get": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Get Schedule",
+        "operationId": "get_schedule_schedule__schedule_id__get",
+        "parameters": [
+          {
+            "name": "schedule_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Schedule Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleGet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Update Schedule",
+        "operationId": "update_schedule_schedule__schedule_id__put",
+        "parameters": [
+          {
+            "name": "schedule_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Schedule Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScheduleCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleCreate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schedule": {
+      "post": {
+        "tags": [
+          "schedule"
+        ],
+        "summary": "Add Schedule",
+        "operationId": "add_schedule_schedule_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScheduleCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleCreate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/participants": {
+      "get": {
+        "tags": [
+          "participant"
+        ],
+        "summary": "Get Participants",
+        "operationId": "get_participants_participants_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ParticipantGet"
+                  },
+                  "type": "array",
+                  "title": "Response Get Participants Participants Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "participant"
+        ],
+        "summary": "Update Participants",
+        "operationId": "update_participants_participants_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/ParticipantCreate"
+                },
+                "type": "array",
+                "title": "Participants Create"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ParticipantGet"
+                  },
+                  "type": "array",
+                  "title": "Response Update Participants Participants Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "participant"
+        ],
+        "summary": "Add Participants",
+        "operationId": "add_participants_participants_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/ParticipantCreate"
+                },
+                "type": "array",
+                "title": "Participants Create"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ParticipantGet"
+                  },
+                  "type": "array",
+                  "title": "Response Add Participants Participants Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/participant/{participant_id}": {
+      "get": {
+        "tags": [
+          "participant"
+        ],
+        "summary": "Get Participant",
+        "operationId": "get_participant_participant__participant_id__get",
+        "parameters": [
+          {
+            "name": "participant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Participant Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipantGet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "participant"
+        ],
+        "summary": "Update Participant",
+        "operationId": "update_participant_participant__participant_id__put",
+        "parameters": [
+          {
+            "name": "participant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Participant Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParticipantCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipantGet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/participant": {
+      "post": {
+        "tags": [
+          "participant"
+        ],
+        "summary": "Add Participant",
+        "operationId": "add_participant_participant_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParticipantCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipantGet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/participant-profile/{participant_id}": {
+      "get": {
+        "tags": [
+          "participant"
+        ],
+        "summary": "Get Participant Profile",
+        "operationId": "get_participant_profile_participant_profile__participant_id__get",
+        "parameters": [
+          {
+            "name": "participant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Participant Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipantProfileGet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "participant"
+        ],
+        "summary": "Update Participant Profile",
+        "operationId": "update_participant_profile_participant_profile__participant_id__put",
+        "parameters": [
+          {
+            "name": "participant_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Participant Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParticipantProfileCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipantProfileGet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/participant-profile": {
+      "post": {
+        "tags": [
+          "participant"
+        ],
+        "summary": "Add Participant Profile",
+        "operationId": "add_participant_profile_participant_profile_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParticipantProfileCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipantProfileGet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccountCreate": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "group_id": {
+            "type": "string",
+            "title": "Group Id"
+          },
+          "role": {
+            "$ref": "#/components/schemas/AccountRole"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "user_id",
+          "group_id",
+          "role",
+          "name"
+        ],
+        "title": "AccountCreate"
+      },
+      "AccountGet": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "group_id": {
+            "type": "string",
+            "title": "Group Id"
+          },
+          "role": {
+            "$ref": "#/components/schemas/AccountRole"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "group": {
+            "$ref": "#/components/schemas/GroupGet"
+          }
+        },
+        "type": "object",
+        "required": [
+          "user_id",
+          "group_id",
+          "role",
+          "name",
+          "id",
+          "created_at",
+          "group"
+        ],
+        "title": "AccountGet"
+      },
+      "AccountRole": {
+        "type": "string",
+        "enum": [
+          "GUEST",
+          "USER",
+          "ADMIN"
+        ],
+        "title": "AccountRole"
+      },
+      "GroupCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "GroupCreate"
+      },
+      "GroupGet": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "id",
+          "created_at"
+        ],
+        "title": "GroupGet"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ParticipantAvailability": {
+        "type": "string",
+        "enum": [
+          "YES",
+          "MAYBE",
+          "NO"
+        ],
+        "title": "ParticipantAvailability"
+      },
+      "ParticipantCreate": {
+        "properties": {
+          "schedule_id": {
+            "type": "string",
+            "title": "Schedule Id"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "toParticipate": {
+            "type": "boolean",
+            "title": "Toparticipate"
+          },
+          "availability": {
+            "$ref": "#/components/schemas/ParticipantAvailability"
+          }
+        },
+        "type": "object",
+        "required": [
+          "schedule_id",
+          "user_id",
+          "toParticipate"
+        ],
+        "title": "ParticipantCreate"
+      },
+      "ParticipantGet": {
+        "properties": {
+          "schedule_id": {
+            "type": "string",
+            "title": "Schedule Id"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "toParticipate": {
+            "type": "boolean",
+            "title": "Toparticipate"
+          },
+          "availability": {
+            "$ref": "#/components/schemas/ParticipantAvailability"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserGet"
+          },
+          "prodile": {
+            "$ref": "#/components/schemas/ParticipantProfileGet"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "schedule_id",
+          "user_id",
+          "toParticipate",
+          "id",
+          "user",
+          "prodile",
+          "created_at"
+        ],
+        "title": "ParticipantGet"
+      },
+      "ParticipantProfileCreate": {
+        "properties": {
+          "participant_id": {
+            "type": "string",
+            "title": "Participant Id"
+          },
+          "intProp1": {
+            "title": "Intprop1",
+            "type": "integer"
+          },
+          "intProp2": {
+            "title": "Intprop2",
+            "type": "integer"
+          },
+          "intProp3": {
+            "title": "Intprop3",
+            "type": "integer"
+          },
+          "listProp1": {
+            "title": "Listprop1",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "listProp2": {
+            "title": "Listprop2",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "listProp3": {
+            "title": "Listprop3",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "required": [
+          "participant_id"
+        ],
+        "title": "ParticipantProfileCreate"
+      },
+      "ParticipantProfileGet": {
+        "properties": {
+          "participant_id": {
+            "type": "string",
+            "title": "Participant Id"
+          },
+          "intProp1": {
+            "title": "Intprop1",
+            "type": "integer"
+          },
+          "intProp2": {
+            "title": "Intprop2",
+            "type": "integer"
+          },
+          "intProp3": {
+            "title": "Intprop3",
+            "type": "integer"
+          },
+          "listProp1": {
+            "title": "Listprop1",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "listProp2": {
+            "title": "Listprop2",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "listProp3": {
+            "title": "Listprop3",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "participant_id",
+          "created_at"
+        ],
+        "title": "ParticipantProfileGet"
+      },
+      "ScheduleConfigGet": {
+        "properties": {
+          "schedule_master_id": {
+            "type": "string",
+            "title": "Schedule Master Id"
+          },
+          "constraints": {
+            "items": {
+              "$ref": "#/components/schemas/ScheduleConstraintGet"
+            },
+            "type": "array",
+            "title": "Constraints"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "schedule_master_id",
+          "constraints",
+          "created_at"
+        ],
+        "title": "ScheduleConfigGet"
+      },
+      "ScheduleConstraintGet": {
+        "properties": {
+          "schedule_config_id": {
+            "type": "string",
+            "title": "Schedule Config Id"
+          },
+          "prop_id": {
+            "$ref": "#/components/schemas/ScheduleConstraintPropId"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "constraints": {
+            "type": "object",
+            "title": "Constraints"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "schedule_config_id",
+          "prop_id",
+          "name",
+          "constraints",
+          "created_at"
+        ],
+        "title": "ScheduleConstraintGet"
+      },
+      "ScheduleConstraintPropId": {
+        "type": "string",
+        "enum": [
+          "intProp1",
+          "intProp2",
+          "intProp3",
+          "listProp1",
+          "listProp2",
+          "listProp3"
+        ],
+        "title": "ScheduleConstraintPropId"
+      },
+      "ScheduleCreate": {
+        "properties": {
+          "schedule_master_id": {
+            "type": "string",
+            "title": "Schedule Master Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "startAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Startat"
+          },
+          "endAt": {
+            "title": "Endat",
+            "type": "string",
+            "format": "date-time"
+          },
+          "allDay": {
+            "type": "boolean",
+            "title": "Allday"
+          },
+          "canceled": {
+            "type": "boolean",
+            "title": "Canceled"
+          }
+        },
+        "type": "object",
+        "required": [
+          "schedule_master_id",
+          "name",
+          "startAt",
+          "allDay",
+          "canceled"
+        ],
+        "title": "ScheduleCreate"
+      },
+      "ScheduleGet": {
+        "properties": {
+          "schedule_master_id": {
+            "type": "string",
+            "title": "Schedule Master Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "startAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Startat"
+          },
+          "endAt": {
+            "title": "Endat",
+            "type": "string",
+            "format": "date-time"
+          },
+          "allDay": {
+            "type": "boolean",
+            "title": "Allday"
+          },
+          "canceled": {
+            "type": "boolean",
+            "title": "Canceled"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "config": {
+            "$ref": "#/components/schemas/ScheduleConfigGet"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "schedule_master_id",
+          "name",
+          "startAt",
+          "allDay",
+          "canceled",
+          "id",
+          "config",
+          "created_at"
+        ],
+        "title": "ScheduleGet"
+      },
+      "UserCreate": {
+        "properties": {
+          "role": {
+            "$ref": "#/components/schemas/UserRole"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "birthday": {
+            "title": "Birthday",
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "role",
+          "name",
+          "email"
+        ],
+        "title": "UserCreate"
+      },
+      "UserGet": {
+        "properties": {
+          "role": {
+            "$ref": "#/components/schemas/UserRole"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "birthday": {
+            "title": "Birthday",
+            "type": "string",
+            "format": "date"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "role",
+          "name",
+          "email",
+          "id",
+          "created_at"
+        ],
+        "title": "UserGet"
+      },
+      "UserRole": {
+        "type": "string",
+        "enum": [
+          "USER",
+          "ADMIN"
+        ],
+        "title": "UserRole"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
