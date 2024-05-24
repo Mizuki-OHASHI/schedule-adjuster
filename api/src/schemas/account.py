@@ -21,6 +21,13 @@ class AccountRole(Enum):
     def __str__(self):
         return self.value
 
+    def auth(self, role: "AccountRole"):
+        if self == AccountRole.ADMIN:
+            return True
+        if self == AccountRole.USER:
+            return role != AccountRole.ADMIN
+        return False
+
 
 class AccountGet(AccountBase):
     id: str

@@ -4,6 +4,8 @@ from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
 
+from src.schemas.account import AccountGet
+
 
 class UserBase(BaseModel):
     role: "UserRole"
@@ -23,6 +25,8 @@ class UserRole(Enum):
 class UserGet(UserBase):
     id: str
     created_at: datetime
+
+    accounts: List["AccountGet"]
 
     model_config = ConfigDict(from_attributes=True)
 

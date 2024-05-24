@@ -31,3 +31,12 @@ body {
     text-wrap: balance;
   }
 }
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button; /* 1 */
+  /*background-color: transparent;  Mantineと競合してボタンが透明になってしまうためコメントアウトして上書き */
+  background-image: none; /* 2 */
+}

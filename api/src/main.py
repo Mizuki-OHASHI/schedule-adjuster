@@ -1,12 +1,11 @@
 from time import time
-from typing import Callable, Coroutine, Any
-
-from fastapi import FastAPI, Request, Response, status
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.openapi.utils import get_openapi
+from typing import Any, Callable, Coroutine
 
 import firebase_admin
-from firebase_admin import credentials, auth
+from fastapi import FastAPI, Request, Response, status, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.openapi.utils import get_openapi
+from firebase_admin import auth, credentials
 
 from src.routers.router import router_list
 from src.routers.user import get_user
@@ -84,35 +83,41 @@ async def authorization(
     # Bearer トークンを取得し, UID を取得する
     token = request.headers.get("Authorization")
     if token is None or not token.startswith("Bearer "):
+        # raise HTTPException(status_code=401, detail="bearer token is required.")
         return Response(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            headers={"message": "Bearer token is required."},
+            headers={"message": "bearer token is required."},
         )
+
     token_body = token[len("Bearer ") :]
     try:
         decoded_token = auth.verify_id_token(token_body, fire_app)
     except Exception:
+        # raise HTTPException(status_code=401, detail="invalid token.")
         return Response(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            headers={"message": "Invalid token."},
+            headers={"message": "invalid token."},
         )
+
     uid = decoded_token["uid"]
 
     # UID のバリデーションを行い, ユーザーを取得する
     if not validate_uid(uid):
         return Response(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            headers={"message": "Invalid UID."},
+            headers={"message": "invalid UID."},
         )
     try:
         user = get_user(uid)
     except ValueError:
+        # raise HTTPException(status_code=401, detail="user not found.")
         return Response(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            headers={"message": "User not found."},
+            headers={"message": "user not found."},
         )
 
-    request.state.user = user
+    request.state.actor = user
+
     response = await call_next(request)
     return response
 

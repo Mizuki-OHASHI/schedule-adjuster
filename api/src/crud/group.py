@@ -1,7 +1,7 @@
 from typing import List
 
-from sqlalchemy.orm import Session
 from sqlalchemy import and_
+from sqlalchemy.orm import Session
 
 from src import models
 
@@ -20,6 +20,19 @@ def get_many_groups(
     return (
         session.query(models.Group)
         .filter(and_(*filters))
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
+
+
+def get_many_groups_by_user(
+    session: Session, user_id: str, skip: int = 0, limit: int = 10
+) -> List[models.Group]:
+    return (
+        session.query(models.Group)
+        .join(models.Account)
+        .filter(models.Account.user_id == user_id)
         .offset(skip)
         .limit(limit)
         .all()

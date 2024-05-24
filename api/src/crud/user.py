@@ -8,7 +8,7 @@ from src.models import User
 def get_user(session: Session, user_id: str) -> User:
     user = session.get(User, user_id)
     if user is None:
-        raise NotFoundError(f"User with id {user_id} does not exist")
+        raise ValueError(f"User with id {user_id} does not exist")
     return user
 
 
