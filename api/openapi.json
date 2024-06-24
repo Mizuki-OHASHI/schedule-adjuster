@@ -58,24 +58,6 @@
         }
       }
     },
-    "/me": {
-      "get": {
-        "summary": "Getme",
-        "operationId": "getMe_me_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserGet"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/users": {
       "get": {
         "tags": [
@@ -1847,6 +1829,13 @@
             "type": "string",
             "format": "date-time",
             "title": "Created At"
+          },
+          "accounts": {
+            "items": {
+              "$ref": "#/components/schemas/AccountGet"
+            },
+            "type": "array",
+            "title": "Accounts"
           }
         },
         "type": "object",
@@ -1855,7 +1844,8 @@
           "name",
           "email",
           "id",
-          "created_at"
+          "created_at",
+          "accounts"
         ],
         "title": "UserGet"
       },
@@ -1893,6 +1883,17 @@
         ],
         "title": "ValidationError"
       }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ]
 }
