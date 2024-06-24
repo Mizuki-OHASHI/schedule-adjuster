@@ -70,13 +70,13 @@ export const SelectOneButton = <K extends string | number>({
           key={key}
           type="button"
           className={cn(
-            "transition-colors border-2 border-gray-900 dark:border-gray-100",
+            "transition-colors border-2 border-gray-900 dark:border-gray-300",
             idx === 0 && "rounded-l-lg",
             idx === Object.keys(values).length - 1 && "rounded-r-lg",
             idx !== 0 && "border-l-0",
             sizeProps,
             key === selected
-              ? "text-gray-100 bg-gray-900 dark:text-gray-900 dark:bg-gray-100"
+              ? "text-gray-100 bg-gray-900 dark:text-gray-900 dark:bg-gray-300"
               : "text-gray-900 bg-gray-100 hover:bg-gray-300 active:bg-gray-500 dark:text-gray-100 dark:bg-gray-900 dark:hover:bg-gray-700 dark:active:bg-gray-500"
           )}
           onClick={() => onSelect(key as K)}
@@ -114,13 +114,13 @@ export const SelectManyButton = <K extends string | number>({
           key={key}
           type="button"
           className={cn(
-            "transition-colors border-2 border-gray-900 dark:border-gray-100",
+            "transition-colors border-2 border-gray-900 dark:border-gray-300",
             idx === 0 && "rounded-l-lg",
             idx === Object.keys(values).length - 1 && "rounded-r-lg",
             idx !== 0 && "border-l-0",
             sizeProps,
             selected.has(key as K)
-              ? "text-gray-100 bg-gray-900 dark:text-gray-900 dark:bg-gray-100"
+              ? "text-gray-100 bg-gray-900 dark:text-gray-900 dark:bg-gray-300"
               : "text-gray-900 bg-gray-100 hover:bg-gray-300 active:bg-gray-500 dark:text-gray-100 dark:bg-gray-900 dark:hover:bg-gray-700 dark:active:bg-gray-500"
           )}
           onClick={() => onSelect(key as K)}

@@ -5,12 +5,15 @@ import { FaCalendar, FaUser } from "react-icons/fa";
 import { LuChevronLeftSquare, LuChevronRightSquare } from "react-icons/lu";
 import { MdHomeFilled } from "react-icons/md";
 
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
 import { IconButton } from "@components/Button";
 
 type SidebarProps = {
   user: "user";
+  router: AppRouterInstance;
 };
-const Sidebar: FC<SidebarProps> = ({ user: _ }) => {
+const Sidebar: FC<SidebarProps> = ({ user: _, router }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const listOfContents = [
     {
@@ -32,7 +35,7 @@ const Sidebar: FC<SidebarProps> = ({ user: _ }) => {
   return (
     <div
       className={cn(
-        "h-[calc(100vh-64px)] sticky top-16 w-64 transition-all duration-300 border-r-2 border-gray-300 dark:border-gray-700 flex flex-col justify-between",
+        "h-[calc(100vh-64px)] sticky top-16 transition-all duration-300 border-r-2 border-gray-300 dark:border-gray-700 flex flex-col justify-between cursor-pointer",
         isOpen ? "w-64" : "w-16"
       )}
     >
@@ -45,7 +48,7 @@ const Sidebar: FC<SidebarProps> = ({ user: _ }) => {
               "rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700"
             )}
             onClick={() => {
-              console.log(content.path);
+              router.push(content.path);
             }}
             aria-hidden="true"
           >

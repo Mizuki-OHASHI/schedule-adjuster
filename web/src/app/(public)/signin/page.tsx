@@ -77,6 +77,7 @@ const SigninPage: FC = () => {
         />
         <InputTable
           keys={["name", "age"]}
+          keyLabels={null}
           values={tableData}
           setValues={setValues}
           addRow={addRow}

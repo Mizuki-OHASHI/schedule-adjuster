@@ -18,7 +18,7 @@ const Cell: FC<CellProps> = ({ value, onChange }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={cn(
-          "focus:outline-none focus:bg-gray-100 focus:dark:bg-gray-900 rounded-lg",
+          "focus:outline-none focus:bg-gray-100 focus:dark:bg-gray-900 rounded-lg w-full",
           "text-gray-700 bg-gray-300 dark:bg-gray-700 dark:text-gray-300",
           "p-1"
         )}
@@ -29,14 +29,16 @@ const Cell: FC<CellProps> = ({ value, onChange }) => {
 
 type InputTableProps = {
   keys: string[];
+  keyLabels: Record<string, string> | null;
   values: Record<string, string | number>[];
   setValues: (idx: number, key: string, value: string | number) => void;
-  addRow: () => void;
-  deleteRow: (idx: number) => void;
+  addRow: (() => void) | null;
+  deleteRow: ((idx: number) => void) | null;
   classNames: string;
 };
 const InputTable: FC<InputTableProps> = ({
   keys,
+  keyLabels,
   values,
   setValues,
   addRow,
@@ -55,11 +57,11 @@ const InputTable: FC<InputTableProps> = ({
                     "text-gray-100 bg-gray-500 dark:text-gray-900 dark:bg-gray-500 p-1 rounded-lg"
                   )}
                 >
-                  {key}
+                  {keyLabels ? keyLabels[key] : key}
                 </div>
               </th>
             ))}
-            <th />
+            {addRow !== null || (deleteRow !== null && <th />)}
           </tr>
         </thead>
         <tbody>
@@ -72,26 +74,30 @@ const InputTable: FC<InputTableProps> = ({
                   onChange={(value) => setValues(idx, key, value)}
                 />
               ))}
-              <td>
-                <IconButton onClick={() => deleteRow(idx)} classNames="">
-                  <FaTrash size={16} color="gray" />
-                </IconButton>
-              </td>
+              {deleteRow !== null && (
+                <td>
+                  <IconButton onClick={() => deleteRow(idx)} classNames="">
+                    <FaTrash size={16} color="gray" />
+                  </IconButton>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
-        <tfoot>
-          <tr>
-            {Array.from({ length: keys.length }).map((_, idx) => (
-              <td key={idx} />
-            ))}
-            <td colSpan={keys.length}>
-              <IconButton onClick={addRow} classNames="">
-                <IoIosAddCircle size={24} color="gray" />
-              </IconButton>
-            </td>
-          </tr>
-        </tfoot>
+        {addRow !== null && (
+          <tfoot>
+            <tr>
+              {Array.from({ length: keys.length }).map((_, idx) => (
+                <td key={idx} />
+              ))}
+              <td colSpan={keys.length}>
+                <IconButton onClick={addRow} classNames="">
+                  <IoIosAddCircle size={24} color="gray" />
+                </IconButton>
+              </td>
+            </tr>
+          </tfoot>
+        )}
       </table>
     </div>
   );
