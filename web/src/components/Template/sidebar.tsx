@@ -1,9 +1,8 @@
 import { useState, type FC } from "react";
 
 import cn from "classnames";
-import { FaCalendar, FaUser } from "react-icons/fa";
+import { FaCalendar } from "react-icons/fa";
 import { LuChevronLeftSquare, LuChevronRightSquare } from "react-icons/lu";
-import { MdHomeFilled } from "react-icons/md";
 
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
@@ -16,21 +15,21 @@ type SidebarProps = {
 const Sidebar: FC<SidebarProps> = ({ user: _, router }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const listOfContents = [
-    {
-      label: "ホーム",
-      path: "/",
-      icon: <MdHomeFilled size={24} color="gray" />,
-    },
+    // {
+    //   label: "ホーム",
+    //   path: "/",
+    //   icon: <MdHomeFilled size={24} color="gray" />,
+    // },
     {
       label: "スケジュール",
       path: "/schedule",
       icon: <FaCalendar size={24} color="gray" />,
     },
-    {
-      label: "アカウント",
-      path: "/me",
-      icon: <FaUser size={24} color="gray" />,
-    },
+    // {
+    //   label: "アカウント",
+    //   path: "/me",
+    //   icon: <FaUser size={24} color="gray" />,
+    // },
   ];
   return (
     <div

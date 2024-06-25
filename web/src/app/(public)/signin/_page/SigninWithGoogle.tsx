@@ -11,7 +11,7 @@ const authProvider = new GoogleAuthProvider();
 type Props = {
   setFireUser: (user: User | null) => void;
 };
-const SigninWithGoogle: FC<Props> = ({ setFireUser }) => {
+const SigninWithGoogle: FC<Props> = ({ setFireUser: _ }) => {
   return (
     <button
       type="button"
