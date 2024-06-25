@@ -2,6 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @layer base {
+  :root {
+    --background: 200, 200, 200;
+    --background-hover: 220, 220, 220;
+    --foreground: 0, 0, 0;
+
+    --muted: 150, 150, 150;
+    --muted-foreground: 50, 50, 50;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: 0, 0, 0;
+      --background-hover: 20, 20, 20;
+      --foreground: 200, 200, 200;
+
+      --muted: 50, 50, 50;
+      --muted-foreground: 150, 150, 150;
+
+      --card: 224 71% 4%;
+      --card-foreground: 213 31% 91%;
+    }
+  }
+
+  body {
+    color: rgb(var(--foreground));
+    background: rgb(var(--background));
+  }
+} */
+
+/*
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -25,18 +59,10 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+*/
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-  -webkit-appearance: button; /* 1 */
-  /*background-color: transparent;  Mantineと競合してボタンが透明になってしまうためコメントアウトして上書き */
-  background-image: none; /* 2 */
 }
