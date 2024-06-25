@@ -13,7 +13,13 @@ const AppTemplate = ({ children }: { children: React.ReactNode }) => {
           "text-2xl flex items-center justify-between p-4 font-mono"
         )}
       >
-        Schedule Auto Adjuster
+        <p
+          onClick={() => router.push("/")}
+          className="cursor-pointer"
+          aria-hidden="true"
+        >
+          Schedule Auto Adjuster
+        </p>
       </div>
       <div className="w-full flex flex-row">
         <Sidebar user="user" router={router} />

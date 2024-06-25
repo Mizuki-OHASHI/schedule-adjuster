@@ -46,7 +46,7 @@ const MemberProfile: FC<MemberProfileProps> = ({
     });
     setMemberProfiles(newProfiles);
   };
-  const onCsvLoad = (str: string) => {
+  const onCsvLoad = (str: string): boolean => {
     const profiles = filterMap(str.split("\n").slice(1), (line) => {
       const splitedAndTrimed = line.split(",").map((s) => s.trim());
       const parsed = memberProfileSchema.safeParse({
@@ -71,6 +71,7 @@ const MemberProfile: FC<MemberProfileProps> = ({
       return parsed.data;
     });
     setMemberProfiles(profiles);
+    return true;
   };
 
   useEffect(() => {

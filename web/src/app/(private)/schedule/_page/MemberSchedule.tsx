@@ -1,72 +1,134 @@
-import { type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 
 import cn from "classnames";
-import { z } from "zod";
 
 import CsvLoader from "@components/CsvLoader";
 import InputTable from "@components/InputTable";
-import { arraysToRecord, filterMap } from "@lib/array";
+import { filterMap } from "@lib/array";
+import dateLib from "@lib/date";
 
-const memberScheduleSchema = z.record(z.string().or(z.number()));
-export type MemberScheduleType = z.infer<typeof memberScheduleSchema>;
+export type MemberScheduleType = {
+  member: string;
+  comment: string;
+} & Record<string, number>;
+
+/** 参加者,...,コメント なる行を見つける */
+const isHeader = (line: string) => {
+  const trimmed = line.trim();
+  return trimmed.startsWith("参加者,") && trimmed.endsWith(",コメント");
+};
+
+const formatRow =
+  (dates: Date[]) =>
+  (line: string): MemberScheduleType | null => {
+    const splited = line.split(",");
+    if (splited.length !== dates.length + 2) {
+      console.error("Invalid csv format", {
+        dates,
+        splited,
+      });
+      return null;
+    }
+    const member = splited[0]!;
+    const comment = splited[splited.length - 1]!;
+    const schedules = splited.slice(1, -1).reduce(
+      (acc, value, idx) => {
+        if (acc === null) return null;
+        const valInt = {
+          "×": 0,
+          "△": 1,
+          "◯": 2,
+        }[value];
+        if (valInt === undefined) {
+          console.error("Invalid csv format", { value });
+          return null;
+        }
+        acc[dates[idx]!.toISOString()] = valInt;
+        return acc;
+      },
+      {} as Record<string, number> | null
+    );
+    if (schedules === null) return null;
+    const row = { member, comment, ...schedules } as MemberScheduleType;
+    return row;
+  };
 
 type MemberScheduleProps = {
   memberSchedules: MemberScheduleType[];
   setMemberSchedules: (schedules: MemberScheduleType[]) => void;
-  keys: string[];
-  setKeys: (keys: string[]) => void;
+  dates: Date[];
+  setDates: (dates: Date[]) => void;
 };
 const MemberSchedule: FC<MemberScheduleProps> = ({
   memberSchedules,
   setMemberSchedules,
-  keys,
-  setKeys,
+  dates,
+  setDates,
 }) => {
   const updateTableValue = (
     idx: number,
     key: string,
     value: string | number
   ) => {
+    if (key === "member" || key === "comment") {
+      const newSchedules = memberSchedules.map((schedule, i) => {
+        if (i === idx) {
+          return { ...schedule, [key]: value } as MemberScheduleType;
+        }
+        return schedule;
+      });
+      setMemberSchedules(newSchedules);
+      return;
+    }
     const newSchedules = memberSchedules.map((schedule, i) => {
       if (i === idx) {
-        return { ...schedule, [key]: value };
+        return {
+          ...schedule,
+          [key]: Number(value),
+        } as MemberScheduleType;
       }
       return schedule;
     });
     setMemberSchedules(newSchedules);
   };
-  const onCsvLoad = (str: string) => {
-    const colmns = str
-      .split("\n")?.[2]
-      ?.split(",")
-      .map((s) => s.trim());
-    if (!colmns) {
-      console.error("Invalid csv format");
-      return;
-    }
-    setKeys(colmns);
-    const schedules = filterMap(str.split("\n").slice(3), (line) => {
-      const splitedAndTrimed = line.split(",").map((s) => s.trim());
-      if (splitedAndTrimed.length !== colmns.length) {
-        console.error("Invalid csv format", {
-          colmns,
-          splitedAndTrimed,
-        });
-        return null;
-      }
-      const parsed = memberScheduleSchema.safeParse(
-        arraysToRecord(colmns, splitedAndTrimed)
-      );
-      if (!parsed.success) {
-        console.error(parsed.error, {
-          colmns,
-          splitedAndTrimed,
-        });
-        return null;
-      }
-      return parsed.data;
+
+  const [keys, setKeys] = useState<string[]>([]);
+  const [keyLabels, setKeyLabels] = useState<Record<string, string>>({
+    member: "参加者",
+    comment: "コメント",
+  });
+  useEffect(() => {
+    setKeys(["member", ...dates.map((d) => d.toISOString()), "comment"]);
+    setKeyLabels({
+      member: "参加者",
+      comment: "コメント",
+      ...Object.fromEntries(
+        dates.map((d) => [d.toISOString(), dateLib.formatDate(d)])
+      ),
     });
-    setMemberSchedules(schedules);
+  }, [dates]);
+
+  const onCsvLoad = (str: string): boolean => {
+    const lines = str.split("\n");
+
+    // 日付のバリデーションとセット
+    const headerIdx = lines.findIndex(isHeader);
+    if (headerIdx === -1) {
+      console.error("Invalid csv format", { lines });
+      return false;
+    }
+    const dates = dateLib.extractDates(lines[headerIdx]!);
+    if (!dates) {
+      console.error("Invalid csv format", { header: lines[headerIdx] });
+      return false;
+    }
+    setDates(dates);
+    setKeys(["member", ...dates.map((d) => d.toISOString()), "comment"]);
+
+    // 中身のバリデーションとセット
+    const values = filterMap(lines.slice(headerIdx + 1), formatRow(dates));
+    setMemberSchedules(values);
+    return true;
   };
 
   return (
@@ -78,7 +140,7 @@ const MemberSchedule: FC<MemberScheduleProps> = ({
       {memberSchedules.length > 0 && (
         <InputTable
           keys={keys}
-          keyLabels={null}
+          keyLabels={keyLabels}
           values={memberSchedules}
           setValues={updateTableValue}
           addRow={null}

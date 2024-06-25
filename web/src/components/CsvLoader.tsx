@@ -23,7 +23,7 @@ type LoadingStatus = "WAITING" | "SUCCESS" | "PARSE_ERROR";
 
 type CsvLoaderProps = {
   startRow: number;
-  onFileLoad: (data: string) => void;
+  onFileLoad: (data: string) => boolean;
   classNames: string;
 };
 const CsvLoader: FC<CsvLoaderProps> = ({
@@ -47,8 +47,8 @@ const CsvLoader: FC<CsvLoaderProps> = ({
         return;
       }
       const { data } = parsed;
-      onFileLoad(data);
-      setStatus("SUCCESS");
+      if (onFileLoad(data)) setStatus("SUCCESS");
+      else setStatus("PARSE_ERROR");
     };
     reader.readAsText(file);
   };

@@ -1,14 +1,18 @@
 "use client";
 
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 
 import type { MemberProfileType } from "@app/(private)/schedule/_page/MemberProfile";
 import type { MemberScheduleType } from "@app/(private)/schedule/_page/MemberSchedule";
+import type { ScheduleSettingsType } from "@app/(private)/schedule/_page/ScheduleSettings";
 
 import MemberProfile from "@app/(private)/schedule/_page/MemberProfile";
 import MemberSchedule from "@app/(private)/schedule/_page/MemberSchedule";
+import ScheduleAdjustment from "@app/(private)/schedule/_page/ScheduleAdjustment";
+import ScheduleSettings from "@app/(private)/schedule/_page/ScheduleSettings";
 import { SelectOneButton } from "@components/Button";
 import AppTemplate from "@components/Template";
+import dateLib from "@lib/date";
 
 type PageEnum =
   | "MEMBER_PROFILE"
@@ -22,7 +26,32 @@ const SchedulePage: FC = () => {
   const [memberSchedules, setMemberSchedules] = useState<MemberScheduleType[]>(
     []
   );
-  const [scheduleKeys, setScheduleKeys] = useState<string[]>([]);
+  const [scheduledDates, setScheduledDates] = useState<Date[]>([]);
+  const [scheduleSetteings, setScheduleSettings] =
+    useState<ScheduleSettingsType>({
+      considerGender: false,
+      settingsOnEachDate: [],
+    });
+
+  useEffect(() => {
+    const newSettingsOnEachDate = scheduledDates.map((date) => {
+      return {
+        date: dateLib.formatDate(date),
+        group:
+          scheduleSetteings.settingsOnEachDate.find(
+            (s) => s.date === dateLib.formatDate(date)
+          )?.group ?? "",
+        tasks:
+          scheduleSetteings.settingsOnEachDate.find(
+            (s) => s.date === dateLib.formatDate(date)
+          )?.tasks ?? "",
+      };
+    });
+    setScheduleSettings({
+      considerGender: scheduleSetteings.considerGender,
+      settingsOnEachDate: newSettingsOnEachDate,
+    });
+  }, [scheduledDates]);
 
   const pages = {
     MEMBER_PROFILE: (
@@ -39,14 +68,21 @@ const SchedulePage: FC = () => {
         setMemberSchedules={(mss: MemberScheduleType[]) => {
           setMemberSchedules(mss);
         }}
-        keys={scheduleKeys}
-        setKeys={(ks: string[]) => {
-          setScheduleKeys(ks);
+        dates={scheduledDates}
+        setDates={(ds: Date[]) => {
+          setScheduledDates(ds);
         }}
       />
     ),
-    SCHEDULE_SETTINGS: <p>schedule settings</p>,
-    SCHEDULE_ADJUSTMET: <p>schedule adjustment</p>,
+    SCHEDULE_SETTINGS: (
+      <ScheduleSettings
+        settings={scheduleSetteings}
+        setSettings={(ss: ScheduleSettingsType) => {
+          setScheduleSettings(ss);
+        }}
+      />
+    ),
+    SCHEDULE_ADJUSTMET: <ScheduleAdjustment />,
   } satisfies Record<PageEnum, JSX.Element>;
 
   return (
